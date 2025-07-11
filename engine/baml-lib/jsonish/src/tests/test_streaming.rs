@@ -563,3 +563,35 @@ test_partial_deserializer_streaming!(
     TypeIR::class("Foo"),
     {"y": "hello"}
 );
+
+const STREAM_BUG_TEST: &str = r#"
+class FinalResponseTool {
+  action "final_response" @description("Provide a final response when all information is gathered and no more tools are needed.")
+  follow_up_questions string[]
+  response string
+}
+"#;
+
+test_partial_deserializer_streaming!(
+    test_stream_bug,
+    STREAM_BUG_TEST,
+    r#"{"action": "final_response", "follow_up_questions": ["What is the capital of France?""#,
+    TypeIR::class("FinalResponseTool"),
+    {"action": "final_response", "follow_up_questions": ["What is the capital of F?"], "response": null}
+);
+
+const STREAM_BUG_TEST_2: &str = r#"
+class FinalResponseTool {
+  action "final_response" @description("Provide a final response when all information is gathered and no more tools are needed.")
+  response string
+  follow_up_questions string[]
+}
+"#;
+
+test_partial_deserializer_streaming!(
+    test_stream_bug_2,
+    STREAM_BUG_TEST_2,
+    r#"{"action": "final_response", "response": "hi", "follow_up_questions": ["What"#,
+    TypeIR::class("FinalResponseTool"),
+    {"action": "final_response", "response": "hi", "follow_up_questions": ["What"]}
+);
