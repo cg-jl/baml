@@ -382,6 +382,13 @@ export interface FakeImage {
   
 }
 
+export interface FinalResponseTool {
+  action: "final_response"
+  follow_up_questions: string[]
+  response: string
+  
+}
+
 export interface FlightConfirmation {
   confirmationNumber: string
   flightNumber: string

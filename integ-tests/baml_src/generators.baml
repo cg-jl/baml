@@ -10,11 +10,11 @@
 //   version "0.201.0"
 // }
 
-// generator lang_typescript {
-//   output_type typescript
-//   output_dir "../typescript"
-//   version "0.201.0"
-// }
+generator lang_typescript {
+  output_type typescript
+  output_dir "../typescript"
+  version "0.201.0"
+}
  
 
 // generator lang_typescript_esm {

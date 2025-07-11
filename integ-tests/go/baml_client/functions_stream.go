@@ -10260,6 +10260,84 @@ func (*stream) TestFallbackToShorthand(ctx context.Context, input string, opts .
 	return channel, nil
 }
 
+// / Streaming version of TestFinalResponseTool
+func (*stream) TestFinalResponseTool(ctx context.Context, input string, opts ...CallOptionFunc) (<-chan StreamValue[stream_types.FinalResponseTool, types.FinalResponseTool], error) {
+
+	var callOpts callOption
+	for _, opt := range opts {
+		opt(&callOpts)
+	}
+
+	args := baml.BamlFunctionArguments{
+		Kwargs: map[string]any{"input": input},
+		Env:    getEnvVars(callOpts.env),
+	}
+
+	if callOpts.clientRegistry != nil {
+		args.ClientRegistry = callOpts.clientRegistry
+	}
+
+	if callOpts.collectors != nil {
+		args.Collectors = callOpts.collectors
+	}
+
+	encoded, err := baml.EncodeArgs(args)
+	if err != nil {
+		// This should never happen. if it does, please file an issue at https://github.com/boundaryml/baml/issues
+		// and include the type of the args you're passing in.
+		wrapped_err := fmt.Errorf("BAML INTERNAL ERROR: TestFinalResponseTool: %w", err)
+		panic(wrapped_err)
+	}
+
+	internal_ctx := context.Background()
+	internal_channel, err := bamlRuntime.CallFunctionStream(internal_ctx, "TestFinalResponseTool", encoded)
+	if err != nil {
+		return nil, err
+	}
+
+	channel := make(chan StreamValue[stream_types.FinalResponseTool, types.FinalResponseTool])
+	go func() {
+		defer func() {
+			internal_ctx.Done()
+		}()
+		for {
+			select {
+			case <-ctx.Done():
+				close(channel)
+				return
+			case result, ok := <-internal_channel:
+				if !ok {
+					// channel closed for some reason
+					close(channel)
+					return
+				}
+				if result.Error != nil {
+					channel <- StreamValue[stream_types.FinalResponseTool, types.FinalResponseTool]{
+						IsError: true,
+						Error:   result.Error,
+					}
+					close(channel)
+					return
+				}
+				if result.HasData {
+					data := (result.Data).(types.FinalResponseTool)
+					channel <- StreamValue[stream_types.FinalResponseTool, types.FinalResponseTool]{
+						IsFinal:  true,
+						as_final: &data,
+					}
+				} else {
+					data := (result.StreamData).(stream_types.FinalResponseTool)
+					channel <- StreamValue[stream_types.FinalResponseTool, types.FinalResponseTool]{
+						IsFinal:   false,
+						as_stream: &data,
+					}
+				}
+			}
+		}
+	}()
+	return channel, nil
+}
+
 // / Streaming version of TestFnNamedArgsSingleBool
 func (*stream) TestFnNamedArgsSingleBool(ctx context.Context, myBool bool, opts ...CallOptionFunc) (<-chan StreamValue[string, string], error) {
 

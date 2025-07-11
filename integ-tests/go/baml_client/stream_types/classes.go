@@ -1845,6 +1845,65 @@ func (u FakeImage) BamlEncodeName() *cffi.CFFITypeName {
 	}
 }
 
+type FinalResponseTool struct {
+	Action              *string  `json:"action"`
+	Follow_up_questions []string `json:"follow_up_questions"`
+	Response            *string  `json:"response"`
+}
+
+func (c *FinalResponseTool) Decode(holder *cffi.CFFIValueClass) {
+	typeName := holder.Name
+	if typeName.Namespace != cffi.CFFITypeNamespace_STREAM_TYPES {
+		panic(fmt.Sprintf("expected cffi.CFFITypeNamespace_STREAM_TYPES, got %s", string(typeName.Namespace.String())))
+	}
+	if typeName.Name != "FinalResponseTool" {
+		panic(fmt.Sprintf("expected FinalResponseTool, got %s", typeName.Name))
+	}
+
+	for _, field := range holder.Fields {
+		key := field.Key
+		valueHolder := field.Value
+		switch key {
+
+		case "action":
+			c.Action = baml.Decode(valueHolder).Interface().(*string)
+
+		case "follow_up_questions":
+			c.Follow_up_questions = baml.Decode(valueHolder).Interface().([]string)
+
+		case "response":
+			c.Response = baml.Decode(valueHolder).Interface().(*string)
+
+		default:
+			panic(fmt.Sprintf("unexpected field: %s", key))
+		}
+	}
+
+}
+
+func (c FinalResponseTool) Encode() (*cffi.CFFIValueHolder, error) {
+	fields := map[string]any{}
+
+	fields["action"] = c.Action
+
+	fields["follow_up_questions"] = c.Follow_up_questions
+
+	fields["response"] = c.Response
+
+	return baml.EncodeClass(c.BamlEncodeName, fields, nil)
+}
+
+func (c FinalResponseTool) BamlTypeName() string {
+	return "FinalResponseTool"
+}
+
+func (u FinalResponseTool) BamlEncodeName() *cffi.CFFITypeName {
+	return &cffi.CFFITypeName{
+		Namespace: cffi.CFFITypeNamespace_STREAM_TYPES,
+		Name:      "FinalResponseTool",
+	}
+}
+
 type FlightConfirmation struct {
 	ConfirmationNumber *string `json:"confirmationNumber"`
 	FlightNumber       *string `json:"flightNumber"`

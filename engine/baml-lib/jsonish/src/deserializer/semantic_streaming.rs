@@ -41,13 +41,22 @@ pub fn validate_streaming_state(
         ir.distribute_type_with_meta(baml_value_with_meta_flags, baml_value.field_type().clone())?;
     let baml_value_with_streaming_state_and_behavior =
         typed_baml_value.map_meta(|(flags, r#type)| (completion_state(flags), r#type));
+    eprintln!(
+        "baml_value_with_streaming_state_and_behavior: {:?}",
+        baml_value_with_streaming_state_and_behavior
+    );
 
     let top_level_node = process_node(
         ir,
         baml_value_with_streaming_state_and_behavior,
         0,
         mode == baml_types::StreamingMode::NonStreaming,
-    )?;
+    )
+    .map_err(|e| {
+        eprintln!("error: {:?}", e);
+        panic!("error");
+        e
+    })?;
     Ok(top_level_node)
 }
 

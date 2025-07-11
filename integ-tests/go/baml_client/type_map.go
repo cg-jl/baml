@@ -87,6 +87,8 @@ var typeMap = map[string]reflect.Type{
 	"STREAM_TYPES.Event":                         reflect.TypeOf(stream_types.Event{}),
 	"TYPES.FakeImage":                            reflect.TypeOf(types.FakeImage{}),
 	"STREAM_TYPES.FakeImage":                     reflect.TypeOf(stream_types.FakeImage{}),
+	"TYPES.FinalResponseTool":                    reflect.TypeOf(types.FinalResponseTool{}),
+	"STREAM_TYPES.FinalResponseTool":             reflect.TypeOf(stream_types.FinalResponseTool{}),
 	"TYPES.FlightConfirmation":                   reflect.TypeOf(types.FlightConfirmation{}),
 	"STREAM_TYPES.FlightConfirmation":            reflect.TypeOf(stream_types.FlightConfirmation{}),
 	"TYPES.FooAny":                               reflect.TypeOf(types.FooAny{}),
