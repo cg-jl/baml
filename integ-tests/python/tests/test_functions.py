@@ -560,6 +560,20 @@ async def test_gemini_streaming():
 
     assert len(geminiRes) > 0, "Expected non-empty result but got empty."
 
+@pytest.mark.asyncio
+async def test_stream_bug():
+    stream = b.stream.TestFinalResponseTool(input="Tell me about TypeScript")
+    chunks = []
+    async for chunk in stream:
+        print(f"LLM output: {chunk}")
+        chunks.append(chunk)
+    final = await stream.get_final_response()
+    print(f"LLM output from Gemini: {final}")
+    assert len(final) > 0, "Expected non-empty result but got empty."
+    assert len(chunks) > 0, "Expected non-empty result but got empty."
+
+
+
 
 @pytest.mark.asyncio
 async def test_gemini_openai_generic_system_prompt():

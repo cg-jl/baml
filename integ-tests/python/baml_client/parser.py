@@ -808,6 +808,12 @@ class LlmResponseParser:
         result = self.__options.merge_options(baml_options).parse_response(function_name="TestFallbackToShorthand", llm_response=llm_response, mode="request")
         return typing.cast(str, result)
 
+    def TestFinalResponseTool(
+        self, llm_response: str, baml_options: BamlCallOptions = {},
+    ) -> types.FinalResponseTool:
+        result = self.__options.merge_options(baml_options).parse_response(function_name="TestFinalResponseTool", llm_response=llm_response, mode="request")
+        return typing.cast(types.FinalResponseTool, result)
+
     def TestFnNamedArgsSingleBool(
         self, llm_response: str, baml_options: BamlCallOptions = {},
     ) -> str:
@@ -2021,6 +2027,12 @@ class LlmStreamParser:
     ) -> str:
         result = self.__options.merge_options(baml_options).parse_response(function_name="TestFallbackToShorthand", llm_response=llm_response, mode="stream")
         return typing.cast(str, result)
+
+    def TestFinalResponseTool(
+        self, llm_response: str, baml_options: BamlCallOptions = {},
+    ) -> stream_types.FinalResponseTool:
+        result = self.__options.merge_options(baml_options).parse_response(function_name="TestFinalResponseTool", llm_response=llm_response, mode="stream")
+        return typing.cast(stream_types.FinalResponseTool, result)
 
     def TestFnNamedArgsSingleBool(
         self, llm_response: str, baml_options: BamlCallOptions = {},

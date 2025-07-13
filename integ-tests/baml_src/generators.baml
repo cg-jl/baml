@@ -1,8 +1,8 @@
-// generator lang_python {
-//   output_type python/pydantic
-//   output_dir "../python"
-//   version "0.201.0"
-// }
+generator lang_python {
+  output_type python/pydantic
+  output_dir "../python"
+  version "0.201.0"
+}
 
 // generator lang_python_v1 {
 //   output_type python/pydantic/v1

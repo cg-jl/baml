@@ -23,7 +23,7 @@ class StreamState(BaseModel, typing.Generic[StreamStateValueT]):
     value: StreamStateValueT
     state: typing_extensions.Literal["Pending", "Incomplete", "Complete"]
 # #########################################################################
-# Generated classes (99)
+# Generated classes (100)
 # #########################################################################
 
 class AnotherObject(BaseModel):
@@ -173,6 +173,11 @@ class Event(BaseModel):
 
 class FakeImage(BaseModel):
     url: typing.Optional[str] = None
+
+class FinalResponseTool(BaseModel):
+    action: typing.Optional[str] = None
+    follow_up_questions: typing.List[str]
+    response: typing.Optional[str] = None
 
 class FlightConfirmation(BaseModel):
     confirmationNumber: typing.Optional[str] = None

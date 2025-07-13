@@ -115,6 +115,9 @@ type_map = {
     "types.FakeImage": types.FakeImage,
     "stream_types.FakeImage": stream_types.FakeImage,
 
+    "types.FinalResponseTool": types.FinalResponseTool,
+    "stream_types.FinalResponseTool": stream_types.FinalResponseTool,
+
     "types.FlightConfirmation": types.FlightConfirmation,
     "stream_types.FlightConfirmation": stream_types.FlightConfirmation,
 

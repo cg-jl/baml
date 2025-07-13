@@ -141,7 +141,7 @@ class TestEnum(str, Enum):
     G = "G"
 
 # #########################################################################
-# Generated classes (99)
+# Generated classes (100)
 # #########################################################################
 
 class AnotherObject(BaseModel):
@@ -291,6 +291,11 @@ class Event(BaseModel):
 
 class FakeImage(BaseModel):
     url: str
+
+class FinalResponseTool(BaseModel):
+    action: typing_extensions.Literal['final_response']
+    follow_up_questions: typing.List[str]
+    response: str
 
 class FlightConfirmation(BaseModel):
     confirmationNumber: str

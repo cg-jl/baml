@@ -990,6 +990,13 @@ class BamlAsyncClient:
             "input": input,
         })
         return typing.cast(str, result.cast_to(types, types, stream_types, False, __runtime__))
+    async def TestFinalResponseTool(self, input: str,
+        baml_options: BamlCallOptions = {},
+    ) -> types.FinalResponseTool:
+        result = await self.__options.merge_options(baml_options).call_function_async(function_name="TestFinalResponseTool", args={
+            "input": input,
+        })
+        return typing.cast(types.FinalResponseTool, result.cast_to(types, types, stream_types, False, __runtime__))
     async def TestFnNamedArgsSingleBool(self, myBool: bool,
         baml_options: BamlCallOptions = {},
     ) -> str:
@@ -3061,6 +3068,18 @@ class BamlStreamClient:
           lambda x: typing.cast(str, x.cast_to(types, types, stream_types, False, __runtime__)),
           ctx,
         )
+    def TestFinalResponseTool(self, input: str,
+        baml_options: BamlCallOptions = {},
+    ) -> baml_py.BamlStream[stream_types.FinalResponseTool, types.FinalResponseTool]:
+        ctx, result = self.__options.merge_options(baml_options).create_async_stream(function_name="TestFinalResponseTool", args={
+            "input": input,
+        })
+        return baml_py.BamlStream[stream_types.FinalResponseTool, types.FinalResponseTool](
+          result,
+          lambda x: typing.cast(stream_types.FinalResponseTool, x.cast_to(types, types, stream_types, True, __runtime__)),
+          lambda x: typing.cast(types.FinalResponseTool, x.cast_to(types, types, stream_types, False, __runtime__)),
+          ctx,
+        )
     def TestFnNamedArgsSingleBool(self, myBool: bool,
         baml_options: BamlCallOptions = {},
     ) -> baml_py.BamlStream[str, str]:
@@ -4826,6 +4845,13 @@ class BamlHttpRequestClient:
             "input": input,
         }, mode="request")
         return result
+    async def TestFinalResponseTool(self, input: str,
+        baml_options: BamlCallOptions = {},
+    ) -> baml_py.baml_py.HTTPRequest:
+        result = await self.__options.merge_options(baml_options).create_http_request_async(function_name="TestFinalResponseTool", args={
+            "input": input,
+        }, mode="request")
+        return result
     async def TestFnNamedArgsSingleBool(self, myBool: bool,
         baml_options: BamlCallOptions = {},
     ) -> baml_py.baml_py.HTTPRequest:
@@ -6238,6 +6264,13 @@ class BamlHttpStreamRequestClient:
         baml_options: BamlCallOptions = {},
     ) -> baml_py.baml_py.HTTPRequest:
         result = await self.__options.merge_options(baml_options).create_http_request_async(function_name="TestFallbackToShorthand", args={
+            "input": input,
+        }, mode="stream")
+        return result
+    async def TestFinalResponseTool(self, input: str,
+        baml_options: BamlCallOptions = {},
+    ) -> baml_py.baml_py.HTTPRequest:
+        result = await self.__options.merge_options(baml_options).create_http_request_async(function_name="TestFinalResponseTool", args={
             "input": input,
         }, mode="stream")
         return result
